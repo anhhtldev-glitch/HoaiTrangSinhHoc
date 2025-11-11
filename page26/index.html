@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Human Kidney Anatomy Cross Section</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(8px);
+      z-index: 0;
+    }
+
+    .sketchfab-embed-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100dvh;
+      background: transparent;
+      z-index: 1;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100dvh;
+      border: none;
+      background: transparent;
+      display: block;
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      gap: 10px;
+    }
+
+    .controls button {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #333;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: #555;
+    }
+
+    @supports (padding: env(safe-area-inset-top)) {
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ✅ Mã nhúng mới -->
+  <div class="sketchfab-embed-wrapper">
+    <iframe id="api-frame" title="Human Kidney Anatomy Cross Section" frameborder="0"
+      allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
+      allow="autoplay; fullscreen; xr-spatial-tracking; execution-while-out-of-viewport; execution-while-not-rendered; web-share"
+      src="https://sketchfab.com/models/d8c0652ddff4474585ccba155c490622/embed?autostart=1&transparent=1&camera=0&ui_hint=0&ui_controls=1&ui_infos=0">
+    </iframe>
+    <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+      <a href="https://sketchfab.com/3d-models/human-kidney-anatomy-cross-section-d8c0652ddff4474585ccba155c490622"
+        target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Human Kidney Anatomy Cross Section</a>
+      by
+      <a href="https://sketchfab.com/zames1992" target="_blank" rel="nofollow"
+        style="font-weight: bold; color: #1CAAD9;">zames1992</a> on
+      <a href="https://sketchfab.com" target="_blank" rel="nofollow"
+        style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+    </p>
+  </div>
+
+  <!-- Nút điều khiển ánh sáng -->
+  <div class="controls">
+    <button onclick="setLightColor([1,0,0])">Đèn đỏ</button>
+    <button onclick="setLightColor([0,1,0])">Đèn xanh</button>
+    <button onclick="setLightColor([1,1,1])">Đèn trắng</button>
+  </div>
+
+  <!-- Sketchfab Viewer API -->
+  <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+  <script>
+    const iframe = document.getElementById('api-frame');
+    const uid = 'd8c0652ddff4474585ccba155c490622'; // UID mới của mô hình thận
+    const client = new Sketchfab(iframe);
+    let api = null;
+
+    client.init(uid, {
+      success: function (_api) {
+        api = _api;
+        api.start();
+        api.addEventListener('viewerready', function () {
+          console.log('✅ Viewer ready');
+
+          // Nền trắng
+          api.setBackground({ color: [1, 1, 1], transparency: 0 }, function (err) {
+            if (!err) console.log('🎨 Background set to white');
+          });
+
+          // Đặt ánh sáng ban đầu
+          api.setLight(2, { color: [1, 0, 0] }, function (err) {
+            if (!err) console.log('💡 Light color set to red');
+          });
+        });
+      },
+      error: function () {
+        console.error('❌ Sketchfab API initialization error');
+      }
+    });
+
+    // Đổi màu đèn
+    function setLightColor(colorArray) {
+      if (!api) return;
+      api.setLight(2, { color: colorArray }, function (err) {
+        if (!err) console.log('✅ Changed light color:', colorArray);
+      });
+    }
+  </script>
+</body>
+
+</html>
